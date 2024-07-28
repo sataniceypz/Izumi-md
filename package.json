@@ -26,6 +26,7 @@
     "@adiwajshing/baileys": "git+https://github.com/A-d-i-t-h-y-a-n/Baileys.js.git",
     "@adiwajshing/keyed-db": "^0.2.4",
     "mask-md": "^1.2.0",
-    "sqlite3": "^5.1.1"
+    "sqlite3": "^5.1.1",
+    "imagekit": "^2.0.0"
   }
 }
