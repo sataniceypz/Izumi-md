@@ -36,6 +36,8 @@ const {
 	uploadToServer
 } = require("../lib/");
 const util = require('util');
+const axios = require("axios");
+const cheerio = require("cheerio");
 const {     StoreDB,
     getstore,
     storeWriteToDB,
