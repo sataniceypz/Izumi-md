@@ -1,5 +1,0 @@
-[build]
-  functions = "functions"
-
-[build.environment]
-  NODE_VERSION = "16"  # Ensure this matches your Node.js version
