@@ -1,4 +1,5 @@
-const { izumi, mode ,sendMenu, sendSegMenu} = require("../lib/");
+const { izumi, mode, sendMenu, sendSegMenu } = require("../lib/");
+
 izumi({
     pattern: "menu ?(.*)",
     desc: "izumi-v3 user manual",
@@ -16,6 +17,6 @@ pluginTypes.forEach((type) => {
         fromMe: mode,
         dontAddCommandList: true,
     }, async (message, match) => {
-        await sendSegMenu(message, match,type);
+        await sendSegMenu(message, match, type);
     });
 });
