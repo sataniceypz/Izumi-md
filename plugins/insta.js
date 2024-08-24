@@ -1,92 +1,57 @@
-const { izumi, getUrl, igdl, isIgUrl, mode, getJson } = require("../lib/");
+const { izumi, mode, isUrl, getJson, parsedUrl } = require("../lib");
 
-izumi(
-    {
-        pattern: "insta ?(.*)",
-        fromMe: mode,
-        desc: "To download Instagram media",
-        type: "downloader",
-    },
-    async (message, match) => {
-        match = match || message.reply_message.text;
-        if (!match) return await message.sendMessage(message.jid, "Give me a link");
+const config = require("../config");
 
-        const url = getUrl(match.trim());
-        if (!url) return await message.sendMessage(message.jid, "Invalid link");
+izumi({
 
-        try {
-            const data = await igdl(url);
-            if (data.length == 0) {
-                return await message.sendMessage(message.jid, "No media found on the link");
-            }
-            for (const mediaUrl of data) {
-                await message.sendFile(mediaUrl);
-            }
-        } catch (e) {
-            await message.sendMessage(message.jid, "Download failed, private account or invalid link!");
-            console.log(e);
-        }
+    pattern: 'insta ?(.*)',
+
+    fromMe: mode,
+
+    desc: 'Send all media from Instagram URL.',
+
+    type: 'downloader'
+
+}, async (message, match, client) => {
+
+    const instaUrl = match;
+
+    if (!instaUrl) {
+
+        return await message.reply('Please provide an Instagram URL.');
+
     }
-);
 
-izumi(
-    {
-        pattern: "iginfo ?(.*)",
-        fromMe: mode,
-        desc: "Get Instagram user information",
-        type: "downloader",
-    },
-    async (message, match) => {
-        try {
-            match = match || message.reply_message.text;
+    try {
 
-            if (!match) {
-                await message.reply("Please provide an Instagram username.\nExample: `.iginfo instagram`");
-                return;
-            }
+      
 
-            const response = await getJson(eypzApi + `insta?username=${encodeURIComponent(match)}`);
+        const mediaUrl = `https://api.eypz.c0m.in/aio?url=${encodeURIComponent(instaUrl)}`;
 
-            if (!response) {
-                await message.reply("Sorry, no information found for the provided Instagram username.");
-                return;
-            }
+        const mediaData = await getJson(mediaUrl);
 
-            // Format the user information into a caption
-            const caption = formatInstagramCaption(response);
+        console.log('Media Data:', mediaData);
 
-            // Construct context info message
-            const contextInfoMessage = {
-                image: { url: response.profile_pic_url },
-                caption: caption,
-                contextInfo: {
-                    mentionedJid: [message.sender],
-                    forwardingScore: 1,
-                    isForwarded: true,
-                    forwardedNewsletterMessageInfo: {
-                        newsletterJid: '120363298577467093@newsletter',
-                        newsletterName: "Iᴢᴜᴍɪ-ᴠ3",
-                        serverMessageId: -1
-                    }
-                }
-            };
+        if (!mediaData || !mediaData.medias || mediaData.medias.length === 0) {
 
-            // Send the profile picture with the caption and context info
-            await message.client.sendMessage(message.jid, contextInfoMessage);
+            return await message.reply('No media found for the provided URL.');
 
-        } catch (error) {
-            console.error("Error fetching Instagram information:", error);
-            await message.reply("Error fetching Instagram information. Please try again later.");
         }
-    }
-);
 
-function formatInstagramCaption(data) {
-    return `*Instagram User Information:*\n\n` +
-           `*Username:* ${data.username}\n` +
-           `*Full Name:* ${data.full_name}\n` +
-           `*Biography:* ${data.biography || 'N/A'}\n` +
-           `*Followers:* ${data.followers_count}\n` +
-           `*Following:* ${data.following_count}\n` +
-           `*Posts:* ${data.post_count}`;
-}
+        for (const media of mediaData.medias) {
+
+            console.log('Sending Media:', media.url);
+
+            await message.sendFromUrl(media.url);
+
+        }
+
+    } catch (error) {
+
+        console.error('Error fetching media:', error);
+
+        await message.reply('An error occurred while fetching media.');
+
+    }
+
+});
