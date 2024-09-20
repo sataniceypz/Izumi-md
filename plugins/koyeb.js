@@ -4,7 +4,7 @@ const simpleGit = require('simple-git');
 const git = simpleGit();
 
 const Koyeb = require('node-koyeb-api');
-const koyeb = new Koyeb(config.KOYEB_API_KEY);
+const koyeb = new Koyeb("myr");
 
 izumi({
     pattern: 'setvar ?(.*)',
@@ -19,7 +19,7 @@ izumi({
             await koyeb.setEnv({
                 key: varKey.toUpperCase(),
                 value: varValue,
-                serviceName: config.KOYEB_APP_NAME
+                serviceName: "myr"
             });
             await message.send(`*_Successfully Set_* *${varKey}:${varValue}*\n_ReDeploying..._`);
             await require('pm2').stop('izumi');
