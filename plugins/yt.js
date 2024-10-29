@@ -12,9 +12,9 @@
   ytsdl,
   parsedUrl
 } = require("../lib");
-const yts = require('yt-search');
+const axios = require('axios');
 const config = require('../config');
-
+const yts = require("yt-search");
 izumi({
     pattern: 'song ?(.*)',
     fromMe: mode,
@@ -35,7 +35,7 @@ izumi({
         const firstVideo = videos[0];
         const videoUrl = firstVideo.url;
 
-        const response = await axios.get(`https://api.eypz.c0m.in/ytdl?url=${videoUrl}`);
+        const response = await axios.get(`https://api-test-ajko.onrender.com/ytdl?url=${videoUrl}`);
         const { download_links, title } = response.data;
         const mp4 = download_links.mp4;
         await message.reply(`_Downloading ${title}_`);
@@ -69,7 +69,7 @@ izumi({
         const firstVideo = videos[0];
         const videoUrl = firstVideo.url;
 
-        const response = await axios.get(`https://api.eypz.c0m.in/ytdl?url=${videoUrl}`);
+        const response = await axios.get(`https://api-test-ajko.onrender.com/ytdl?url=${videoUrl}`);
         const { download_links, title } = response.data;
         const mp4 = download_links.mp4;
         await message.reply(`_Downloading ${title}_`);
@@ -95,7 +95,7 @@ izumi({
 
     const videoUrl = match;
     try {
-        const response = await axios.get(`https://api.eypz.c0m.in/ytdl?url=${videoUrl}`);
+        const response = await axios.get(`https://api-test-ajko.onrender.com/ytdl?url=${videoUrl}`);
         const { download_links, title } = response.data;
         const mp4 = download_links.mp4;
         await message.reply(`_Downloading ${title}_`);
@@ -122,7 +122,7 @@ izumi({
 
     const videoUrl = match;
     try {
-        const response = await axios.get(`https://api.eypz.c0m.in/ytdl?url=${videoUrl}`);
+        const response = await axios.get(`https://api-test-ajko.onrender.com/ytdl?url=${videoUrl}`);
         const { download_links, title } = response.data;
         const mp4 = download_links.mp4;
         await message.reply(`_Downloading ${title}_`);
@@ -136,7 +136,6 @@ izumi({
         await message.reply('Failed to download video. Please try again later.');
     }
 });
-
 izumi(
   {
     pattern: "play ?(.*)",
@@ -267,4 +266,4 @@ function formatYouTubeMessage(videos) {
   });
 
   return message;
-}
+       }
