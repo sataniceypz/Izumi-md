@@ -1,0 +1,27 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.25.1
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:hoek:20180212':
+    - api-dylux > publish > npm > request > hawk > hoek:
+        patched: '2024-11-15T09:09:55.548Z'
+        id: 'npm:hoek:20180212'
+        path: api-dylux > publish > npm > request > hawk > hoek
+    - api-dylux > publish > npm > request > hawk > boom > hoek:
+        patched: '2024-11-15T09:09:55.548Z'
+        id: 'npm:hoek:20180212'
+        path: api-dylux > publish > npm > request > hawk > boom > hoek
+    - api-dylux > publish > npm > request > hawk > sntp > hoek:
+        patched: '2024-11-15T09:09:55.548Z'
+        id: 'npm:hoek:20180212'
+        path: api-dylux > publish > npm > request > hawk > sntp > hoek
+    - api-dylux > publish > npm > request > hawk > cryptiles > boom > hoek:
+        patched: '2024-11-15T09:09:55.548Z'
+        id: 'npm:hoek:20180212'
+        path: api-dylux > publish > npm > request > hawk > cryptiles > boom > hoek
+  'npm:stringstream:20180511':
+    - api-dylux > publish > npm > request > stringstream:
+        patched: '2024-11-15T09:09:55.548Z'
+        id: 'npm:stringstream:20180511'
+        path: api-dylux > publish > npm > request > stringstream
